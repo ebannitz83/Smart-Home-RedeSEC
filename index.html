@@ -35,7 +35,7 @@
     .tab-btn:hover { background: #475569; }
     .tab-btn.active { background: var(--primary); color: #fff; }
     
-    main { max-width: 1300px; width: 100%; margin: 0 auto; padding: 20px 16px; display: grid; grid-template-columns: 1fr 380px; gap: 24px; flex: 1; align-items: start; }
+    main { max-width: 1300px; width: 100%; margin: 0 auto; padding: 20px 16px; display: grid; grid-template-columns: 1fr 410px; gap: 24px; flex: 1; align-items: start; }
     @media (max-width: 1024px) {
       main { grid-template-columns: 1fr; }
     }
@@ -121,12 +121,13 @@
     .card-features li { margin-bottom: 3px; position: relative; padding-left: 14px; }
     .card-features li::before { content: "•"; position: absolute; left: 2px; color: var(--primary); font-weight: bold; }
     
-    .card-action { border-top: 1px solid #f1f5f9; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .card-action { border-top: 1px solid #f1f5f9; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .qty-control { display: flex; align-items: center; background: #f1f5f9; border-radius: 6px; padding: 2px; border: 1px solid var(--border); }
     .qty-btn { width: 28px; height: 28px; border: none; background: #fff; color: var(--text-main); font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 14px; }
     .qty-btn.plus { background: var(--primary); color: #fff; }
-    .qty-input { width: 40px; text-align: center; border: none; background: transparent; font-weight: bold; font-size: 12px; }
+    .qty-input { width: 38px; text-align: center; border: none; background: transparent; font-weight: bold; font-size: 12px; }
     
+    /* Barra Lateral - Lista do Projeto com Ambientes */
     aside.sidebar { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; position: sticky; top: 110px; display: flex; flex-direction: column; max-height: calc(100vh - 130px); }
     .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 12px; }
     .sidebar-header h2 { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
@@ -134,17 +135,41 @@
     .btn-clear { background: none; border: none; color: #94a3b8; font-size: 11px; cursor: pointer; text-decoration: underline; }
     .btn-clear:hover { color: #ef4444; }
     
-    .client-input { margin-bottom: 12px; }
-    .client-input label { font-size: 11px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px; }
+    .client-input { margin-bottom: 14px; }
+    .client-input label { font-size: 11px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px; }
     .client-input input { width: 100%; padding: 7px 10px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; outline: none; }
     .client-input input:focus { border-color: var(--primary); }
+
+    /* Gestão de Ambientes */
+    .env-management { margin-bottom: 12px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+    .env-management-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .btn-add-env { background: var(--header-bg); color: #fff; border: none; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-add-env:hover { background: var(--primary); }
+    .env-active-selector select { width: 100%; padding: 6px 10px; border: 1.5px solid var(--primary); border-radius: 6px; font-size: 12px; font-weight: 700; background: #eff6ff; color: #1e40af; outline: none; cursor: pointer; }
     
-    .cart-items { flex: 1; overflow-y: auto; margin-bottom: 12px; padding-right: 4px; display: flex; flex-direction: column; gap: 8px; }
-    .cart-item { background: #f8fafc; border: 1px solid var(--border); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .cart-thumb { width: 36px; height: 36px; border-radius: 4px; object-fit: contain; background: #fff; border: 1px solid var(--border); flex-shrink: 0; }
-    .cart-thumb-empty { width: 36px; height: 36px; border-radius: 4px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #64748b; flex-shrink: 0; }
-    .cart-item-title { font-size: 12px; font-weight: 600; color: #1e293b; line-height: 1.2; }
-    .cart-item-sub { font-size: 10px; color: #64748b; font-family: monospace; }
+    .cart-items { flex: 1; overflow-y: auto; margin-bottom: 12px; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; }
+    
+    /* Card de cada Ambiente no Carrinho */
+    .env-group-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 10px; transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .env-group-card.active-env-card { border-color: #3b82f6; background: #fafcff; box-shadow: 0 0 0 1.5px #3b82f6; }
+    .env-card-header { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 8px; border-bottom: 1px dashed var(--border); padding-bottom: 6px; }
+    .env-title-box { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+    .env-num-tag { font-size: 11px; font-weight: 800; color: #64748b; background: #e2e8f0; border-radius: 4px; padding: 2px 5px; }
+    .env-name-input { flex: 1; font-size: 12px; font-weight: 700; color: #0f172a; border: 1px solid transparent; background: transparent; padding: 3px 6px; border-radius: 4px; outline: none; }
+    .env-name-input:hover, .env-name-input:focus { background: #fff; border-color: #cbd5e1; }
+    .badge-env-active { background: #2563eb; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+    .btn-select-env { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+    .btn-select-env:hover { background: #e2e8f0; }
+    .btn-delete-env { background: none; border: none; font-size: 13px; cursor: pointer; color: #94a3b8; padding: 2px; }
+    .btn-delete-env:hover { color: #ef4444; }
+
+    .env-items-list { display: flex; flex-direction: column; gap: 6px; }
+    .cart-item { background: #f8fafc; border: 1px solid var(--border); padding: 6px 8px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .cart-thumb { width: 32px; height: 32px; border-radius: 4px; object-fit: contain; background: #fff; border: 1px solid var(--border); flex-shrink: 0; }
+    .cart-thumb-empty { width: 32px; height: 32px; border-radius: 4px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #64748b; flex-shrink: 0; }
+    .cart-item-title { font-size: 11.5px; font-weight: 600; color: #1e293b; line-height: 1.2; }
+    .cart-item-sub { font-size: 9.5px; color: #64748b; font-family: monospace; }
+    .env-card-footer { border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: #64748b; }
     
     .sidebar-actions { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border); padding-top: 12px; }
     .btn-action { width: 100%; padding: 9px; font-size: 12px; font-weight: 700; border-radius: 6px; border: none; cursor: pointer; transition: 0.2s; }
@@ -170,9 +195,7 @@
       z-index: 100;
       padding: 16px;
     }
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
     .modal-content {
       background: #ffffff;
       width: 100%;
@@ -194,24 +217,9 @@
       border-bottom: 1px solid var(--border);
       padding-bottom: 10px;
     }
-    .modal-header h3 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .modal-header p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .modal-close {
-      background: none;
-      border: none;
-      font-size: 20px;
-      line-height: 1;
-      cursor: pointer;
-      color: #94a3b8;
-    }
+    .modal-header h3 { font-size: 15px; font-weight: 700; color: var(--text-main); }
+    .modal-header p { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .modal-close { background: none; border: none; font-size: 20px; line-height: 1; cursor: pointer; color: #94a3b8; }
     .modal-close:hover { color: #0f172a; }
 
     .modal-preview {
@@ -226,103 +234,25 @@
       overflow: hidden;
       margin-bottom: 16px;
     }
-    .modal-preview img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .modal-preview-empty {
-      color: #94a3b8;
-      font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
+    .modal-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .modal-preview-empty { color: #94a3b8; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 
-    .modal-field {
-      margin-bottom: 12px;
-    }
-    .modal-field label {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      color: #475569;
-      margin-bottom: 4px;
-    }
-    .modal-field input[type="url"],
-    .modal-field input[type="text"] {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      outline: none;
-    }
-    .modal-field input[type="url"]:focus,
-    .modal-field input[type="text"]:focus {
-      border-color: var(--primary);
-    }
+    .modal-field { margin-bottom: 12px; }
+    .modal-field label { display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+    .modal-field input[type="url"], .modal-field input[type="text"] { width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; outline: none; }
+    .modal-field input[type="url"]:focus, .modal-field input[type="text"]:focus { border-color: var(--primary); }
 
-    .modal-divider {
-      text-align: center;
-      position: relative;
-      margin: 14px 0;
-    }
-    .modal-divider::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--border);
-    }
-    .modal-divider span {
-      position: relative;
-      background: #fff;
-      padding: 0 10px;
-      font-size: 11px;
-      color: #94a3b8;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
+    .modal-divider { text-align: center; position: relative; margin: 14px 0; }
+    .modal-divider::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); }
+    .modal-divider span { position: relative; background: #fff; padding: 0 10px; font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; }
 
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 8px;
-      margin-top: 18px;
-      border-top: 1px solid var(--border);
-      padding-top: 14px;
-    }
-    .btn-modal {
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .btn-modal-cancel {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid var(--border);
-    }
+    .modal-footer { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
+    .btn-modal { padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .btn-modal-cancel { background: #f1f5f9; color: #334155; border: 1px solid var(--border); }
     .btn-modal-cancel:hover { background: #e2e8f0; }
-    .btn-modal-remove {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-      margin-right: auto;
-    }
+    .btn-modal-remove { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; margin-right: auto; }
     .btn-modal-remove:hover { background: #fecaca; }
-    .btn-modal-save {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-    }
+    .btn-modal-save { background: var(--primary); color: #fff; border: none; }
     .btn-modal-save:hover { background: var(--primary-hover); }
   </style>
 </head>
@@ -350,7 +280,7 @@
     <section>
       <div class="section-header">
         <strong id="counterText">0 produtos disponíveis</strong>
-        <span>Clique na imagem para adicionar ou alterar a foto</span>
+        <span id="activeEnvIndicator">Adicionando equipamentos no ambiente selecionado</span>
       </div>
       <div class="product-grid" id="productGrid"></div>
     </section>
@@ -363,9 +293,21 @@
 
       <div class="client-input">
         <label>Nome do Projeto / Cliente:</label>
-        <input type="text" id="projectClient" placeholder="Ex: Residência Alphaville - Bloco A">
+        <input type="text" id="projectClient" placeholder="Ex: Casa Eder Bannitz" oninput="saveCurrentProject()">
       </div>
 
+      <!-- Barra de Controle de Ambientes -->
+      <div class="env-management">
+        <div class="env-management-header">
+          <label style="font-size: 11px; font-weight: 700; color: #334155;">Ambientes do Projeto:</label>
+          <button class="btn-add-env" onclick="addEnvironment()">+ Novo Ambiente</button>
+        </div>
+        <div class="env-active-selector">
+          <select id="activeEnvSelect" onchange="setActiveEnv(this.value)"></select>
+        </div>
+      </div>
+
+      <!-- Lista de Ambientes e seus respectivos Materiais -->
       <div class="cart-items" id="cartContainer"></div>
 
       <div class="sidebar-actions">
@@ -429,16 +371,16 @@
 
       // 2. Módulos Z-Wave
       { id: "10007174", name: "Switch On/Off Control", cat: "Módulos Z-Wave", badge: "Relé Duplo", desc: "Módulo relé de embutir microcontrolado para 2 circuitos independentes de iluminação ou cargas elétricas.", feats: ["Medição de consumo ativo", "2 canais em 1 caixa 4x2", "Mantém teclas manuais"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_93701-300x300.webp?version=20260916174250" },
-      { id: "70001581", name: "Dimmer Control", cat: "Módulos Z-Wave", badge: "Dimerização 1CH", desc: "Módulo de dimerização gradual para lâmpadas LED e convencionais com autocalibração inteligente.", feats: ["Autocalibração anti-flicker", "Instalação com ou sem neutro", "Acendimento suave (Soft Start)"], img: "" },
-      { id: "70001580", name: "Roll Control", cat: "Módulos Z-Wave", badge: "Persianas AC", desc: "Módulo inteligente para persianas motorizadas, cortinas, venezianas e telas retráteis AC.", feats: ["Posicionamento milimétrico em %", "Controle de lâminas venetian", "Medição de consumo elétrico"], img: "" },
-      { id: "70001583", name: "RGBW Control", cat: "Módulos Z-Wave", badge: "LED RGBW & 0-10V", desc: "Controlador para fitas LED coloridas 12V/24V ou 4 circuitos independentes de fitas monocromáticas.", feats: ["4 entradas analógicas 0-10V", "Cenas dinâmicas pré-programadas"], img: "" },
+      { id: "70001581", name: "Dimmer Control", cat: "Módulos Z-Wave", badge: "Dimerização 1CH", desc: "Módulo de dimerização gradual para lâmpadas LED e convencionais com autocalibração inteligente.", feats: ["Autocalibração anti-flicker", "Instalação com ou sem neutro", "Acendimento suave (Soft Start)"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_93701-300x300.webp?version=20260916174250" },
+      { id: "70001580", name: "Roll Control", cat: "Módulos Z-Wave", badge: "Persianas AC", desc: "Módulo inteligente para persianas motorizadas, cortinas, venezianas e telas retráteis AC.", feats: ["Posicionamento milimétrico em %", "Controle de lâminas venetian", "Medição de consumo elétrico"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_93701-300x300.webp?version=20260916174250" },
+      { id: "70001583", name: "RGBW Control", cat: "Módulos Z-Wave", badge: "LED RGBW & 0-10V", desc: "Controlador para fitas LED coloridas 12V/24V ou 4 circuitos independentes de fitas monocromáticas.", feats: ["4 entradas analógicas 0-10V", "Cenas dinâmicas pré-programadas"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_93701-300x300.webp?version=20260916174250" },
 
       // 3. Sensores
       { id: "70001585", name: "Multi Sensor", cat: "Sensores", badge: "Sensor 4 em 1", desc: "Detector ultracompacto a bateria: presença humana, temperatura, luminosidade e acelerômetro.", feats: ["Presença, Lux, Temp e Impacto", "LED colorido inteligente", "Bateria de longa duração"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91801-300x300.webp?version=20260811210144" },
       { id: "70001589", name: "Door / Window Sensor", cat: "Sensores", badge: "Abertura Magnética", desc: "Sensor magnético sem fio de contato para portas, janelas e gavetas com sensor térmico.", feats: ["Detecção de abertura imediata", "Sensor térmico embutido", "Design discreto"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91401-300x300.webp?version=20260625111458" },
       { id: "70001586", name: "Flood Sensor", cat: "Sensores", badge: "Alagamento", desc: "Sensor sem fio de detecção de vazamento de água para áreas molhadas e casas de máquinas.", feats: ["Sondas em ouro telescópicas", "Flutua e emite alarme sonoro", "Prevenção contra inundações"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91501-300x300.webp?version=20260716141934" },
       { id: "70001587", name: "Smoke Sensor", cat: "Sensores", badge: "Fumaça & Calor", desc: "Sensor óptico de fumaça e elevação súbita de calor com alarme sonoro local integrado.", feats: ["Grelha eletropolida anti-poeira", "Sirene acústica embutida"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_92101-300x300.webp?version=20260716141531" },
-      { id: "70001610", name: "CO Sensor", cat: "Sensores", badge: "Monóxido Carbono", desc: "Detector de segurança de vida para monóxido de carbono com alerta local autônomo.", feats: ["Certificação de segurança", "Leitura precisa em PPM"], img: "" },
+      { id: "70001610", name: "CO Sensor", cat: "Sensores", badge: "Monóxido Carbono", desc: "Detector de segurança de vida para monóxido de carbono com alerta local autônomo.", feats: ["Certificação de segurança", "Leitura precisa em PPM"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_92101-300x300.webp?version=20260716141531" },
 
       // 4. Interfaces
       { 
@@ -453,13 +395,13 @@
           "Alimentação PoE padrão (IEEE802.3af) e conexão Wi-Fi", 
           "Visualização em tempo real de câmeras CFTV e abertura de travas"
         ],
-        img: "" 
+        img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_90501-300x300.webp" 
       },
-      { id: "70001584", name: "Smart Control / Smart Implant", cat: "Interfaces", badge: "Interface Universal", desc: "Módulo de baixa tensão (9-30V DC) com 2 entradas analógicas/digitais e 2 contatos secos.", feats: ["2 entradas + 2 contatos secos", "Suporta sondas DS18B20", "Integra portões e alarmes"], img: "" },
+      { id: "70001584", name: "Smart Control / Smart Implant", cat: "Interfaces", badge: "Interface Universal", desc: "Módulo de baixa tensão (9-30V DC) com 2 entradas analógicas/digitais e 2 contatos secos.", feats: ["2 entradas + 2 contatos secos", "Suporta sondas DS18B20", "Integra portões e alarmes"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_93301-300x300.webp" },
 
       // 5. Controles
-      { id: "70001591", name: "The Button", cat: "Controles", badge: "Botão de Cenas", desc: "Botão sem fio compacto para acionamento de rotinas completas ou pânico silencioso.", feats: ["Reconhece até 6 ações de clique", "Design retrô versátil"], img: "" },
-      { id: "70001598", name: "KeyFob", cat: "Controles", badge: "Chaveiro Z-Wave", desc: "Controle portátil com 6 botões anatômicos para portões, iluminação e alarmes.", feats: ["Até 30 ações configuráveis", "Proteção por código PIN"], img: "" },
+      { id: "70001591", name: "The Button", cat: "Controles", badge: "Botão de Cenas", desc: "Botão sem fio compacto para acionamento de rotinas completas ou pânico silencioso.", feats: ["Reconhece até 6 ações de clique", "Design retrô versátil"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_57401-300x300.webp" },
+      { id: "70001598", name: "KeyFob", cat: "Controles", badge: "Chaveiro Z-Wave", desc: "Controle portátil com 6 botões anatômicos para portões, iluminação e alarmes.", feats: ["Até 30 ações configuráveis", "Proteção por código PIN"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91701-300x300.webp" },
       { id: "20007702", name: "Controle Remoto Nice BiDi 1 Canal", cat: "Controles", badge: "RF 433MHz BiDi", desc: "Emissor Nice para acionamento de 1 automação com retorno visual de status BiDi.", feats: ["Feedback por LED", "Comunicação direta"], img: "" },
       { id: "20007703", name: "Controle Remoto Nice BiDi 6 Canais", cat: "Controles", badge: "RF 433MHz BiDi", desc: "Emissor multicanal para até 6 automações independentes ou grupos Nice.", feats: ["Comando individual ou em grupo", "Sinalizador BiDi"], img: "" },
       { id: "20007706", name: "Controle Nice BiDi 6 Canais + Slider", cat: "Controles", badge: "RF BiDi com Slider", desc: "Emissor com barra sensível ao toque para ajuste percentual suave de persianas ou luz.", feats: ["Slider tátil deslizante", "Comunicação bidirecional"], img: "" },
@@ -498,7 +440,12 @@
       { id: "70001658", name: "HubNetworkLink", cat: "Acessórios", badge: "Cabo Ethernet", desc: "Cabo adaptador de rede oficial para conectar a Yubii Home à rede Ethernet cabeada.", feats: ["Conexão RJ-45 direta", "Maior estabilidade sem Wi-Fi"], img: "" }
     ];
 
-    let selected = {};
+    // Estrutura de Ambientes do Projeto
+    let environments = [
+      { id: "env_1", name: "Sala de Estar", items: {} }
+    ];
+    let activeEnvId = "env_1";
+
     let activeCat = "Todos";
     let search = "";
     let customImages = {}; // Armazena imagens personalizadas salvas no localStorage
@@ -507,7 +454,9 @@
 
     function init() {
       loadCustomImages();
+      loadSavedProject();
       renderCategories();
+      renderEnvSelector();
       renderProducts();
       renderCart();
     }
@@ -527,12 +476,48 @@
       try {
         localStorage.setItem("redesec_product_images", JSON.stringify(customImages));
       } catch (e) {
-        alert("Atenção: Limite de armazenamento local atingido. Tente usar links de imagens da internet ou imagens menores.");
+        alert("Atenção: Limite de armazenamento atingido.");
+      }
+    }
+
+    function loadSavedProject() {
+      try {
+        const savedProj = localStorage.getItem("redesec_current_project");
+        if (savedProj) {
+          const parsed = JSON.parse(savedProj);
+          if (parsed.environments && parsed.environments.length > 0) {
+            environments = parsed.environments;
+            activeEnvId = parsed.activeEnvId || environments[0].id;
+          }
+          if (parsed.clientName) {
+            const input = document.getElementById("projectClient");
+            if (input) input.value = parsed.clientName;
+          }
+        }
+      } catch (e) {
+        console.warn("Erro ao carregar projeto salvo:", e);
+      }
+    }
+
+    function saveCurrentProject() {
+      try {
+        const clientName = document.getElementById("projectClient").value;
+        localStorage.setItem("redesec_current_project", JSON.stringify({
+          clientName,
+          environments,
+          activeEnvId
+        }));
+      } catch (e) {
+        console.warn("Erro ao salvar projeto:", e);
       }
     }
 
     function getProductImage(prod) {
       return customImages[prod.id] || prod.img || "";
+    }
+
+    function getActiveEnvironment() {
+      return environments.find(e => e.id === activeEnvId) || environments[0];
     }
 
     function renderCategories() {
@@ -561,13 +546,96 @@
       renderProducts();
     }
 
+    /* Gestão de Ambientes */
+    function addEnvironment() {
+      const num = environments.length + 1;
+      const defaultName = num === 2 ? "Cozinha" : (num === 3 ? "Suíte Master" : `Ambiente ${num}`);
+      const newId = "env_" + Date.now();
+      environments.push({
+        id: newId,
+        name: defaultName,
+        items: {}
+      });
+      activeEnvId = newId;
+      saveCurrentProject();
+      renderEnvSelector();
+      renderProducts();
+      renderCart();
+    }
+
+    function removeEnvironment(envId) {
+      if (environments.length <= 1) {
+        alert("O projeto deve ter ao menos um ambiente.");
+        return;
+      }
+      const env = environments.find(e => e.id === envId);
+      const name = env ? env.name : "este ambiente";
+      if (confirm(`Deseja realmente excluir o ambiente "${name}" e todos os equipamentos dele?`)) {
+        environments = environments.filter(e => e.id !== envId);
+        if (activeEnvId === envId) {
+          activeEnvId = environments[0].id;
+        }
+        saveCurrentProject();
+        renderEnvSelector();
+        renderProducts();
+        renderCart();
+      }
+    }
+
+    function setActiveEnv(envId) {
+      activeEnvId = envId;
+      saveCurrentProject();
+      renderEnvSelector();
+      renderProducts();
+      renderCart();
+    }
+
+    function updateEnvName(envId, newName) {
+      const env = environments.find(e => e.id === envId);
+      if (env) {
+        env.name = newName.trim() === "" ? "Ambiente sem nome" : newName;
+        saveCurrentProject();
+        // Atualiza o select sem reconstruir toda a página para manter foco do input
+        const select = document.getElementById("activeEnvSelect");
+        if (select) {
+          const opt = select.querySelector(`option[value="${envId}"]`);
+          if (opt) opt.text = env.name;
+        }
+        updateActiveIndicator();
+      }
+    }
+
+    function renderEnvSelector() {
+      const select = document.getElementById("activeEnvSelect");
+      if (!select) return;
+      select.innerHTML = environments.map((e, idx) => `
+        <option value="${e.id}" ${e.id === activeEnvId ? "selected" : ""}>
+          ${idx + 1}. ${e.name}
+        </option>
+      `).join("");
+      updateActiveIndicator();
+    }
+
+    function updateActiveIndicator() {
+      const activeEnv = getActiveEnvironment();
+      const indicator = document.getElementById("activeEnvIndicator");
+      if (indicator && activeEnv) {
+        indicator.innerHTML = `Ambiente Ativo: <strong style="color:var(--primary);">${activeEnv.name}</strong> (clique em + nos produtos para adicionar aqui)`;
+      }
+    }
+
     document.getElementById("searchInput").addEventListener("input", (e) => {
       search = e.target.value.toLowerCase().trim();
       renderProducts();
     });
 
+    function getTotalProductQtyAllEnvs(prodId) {
+      return environments.reduce((sum, env) => sum + (env.items[prodId] || 0), 0);
+    }
+
     function renderProducts() {
       const grid = document.getElementById("productGrid");
+      const activeEnv = getActiveEnvironment();
       const filtered = products.filter(p => {
         const matchCat = activeCat === "Todos" || p.cat === activeCat;
         const matchSearch = search === "" || 
@@ -585,7 +653,8 @@
       }
 
       grid.innerHTML = filtered.map(p => {
-        const qty = selected[p.id] || 0;
+        const qtyInActive = (activeEnv && activeEnv.items[p.id]) ? activeEnv.items[p.id] : 0;
+        const totalInAll = getTotalProductQtyAllEnvs(p.id);
         const img = getProductImage(p);
 
         const imageHtml = img 
@@ -622,10 +691,15 @@
               </div>
             </div>
             <div class="card-action">
-              <span style="font-size:11px; font-weight:600; color:#475569;">Qtd no Projeto:</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:11px; font-weight:700; color:#334155; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  Em: <span style="color:var(--primary);">${activeEnv.name}</span>
+                </div>
+                ${totalInAll > 0 ? `<div style="font-size:10px; color:#64748b;">Total projeto: ${totalInAll} un</div>` : ''}
+              </div>
               <div class="qty-control">
                 <button class="qty-btn" onclick="changeQty('${p.id}', -1)">-</button>
-                <input class="qty-input" type="text" readonly value="${qty}">
+                <input class="qty-input" type="text" readonly value="${qtyInActive}">
                 <button class="qty-btn plus" onclick="changeQty('${p.id}', 1)">+</button>
               </div>
             </div>
@@ -634,22 +708,34 @@
       }).join("");
     }
 
-    function changeQty(id, delta) {
-      const current = selected[id] || 0;
+    function changeQty(prodId, delta, targetEnvId = null) {
+      const envId = targetEnvId || activeEnvId;
+      const env = environments.find(e => e.id === envId);
+      if (!env) return;
+
+      const current = env.items[prodId] || 0;
       const next = current + delta;
+
       if (next <= 0) {
-        delete selected[id];
+        delete env.items[prodId];
       } else {
-        selected[id] = next;
+        env.items[prodId] = next;
       }
+
+      saveCurrentProject();
       renderProducts();
       renderCart();
     }
 
     function clearCart() {
-      if (Object.keys(selected).length === 0) return;
-      if (confirm("Deseja realmente zerar a lista?")) {
-        selected = {};
+      if (confirm("Deseja realmente zerar toda a lista e redefinir os ambientes?")) {
+        environments = [
+          { id: "env_1", name: "Sala de Estar", items: {} }
+        ];
+        activeEnvId = "env_1";
+        document.getElementById("projectClient").value = "";
+        saveCurrentProject();
+        renderEnvSelector();
         renderProducts();
         renderCart();
       }
@@ -658,36 +744,96 @@
     function renderCart() {
       const container = document.getElementById("cartContainer");
       const badge = document.getElementById("badgeTotal");
-      const list = Object.entries(selected).map(([id, qty]) => {
-        const item = products.find(p => p.id === id);
-        return { ...item, qty };
+
+      // Calcula o total geral de peças no projeto
+      let totalUnitsProject = 0;
+      environments.forEach(env => {
+        totalUnitsProject += Object.values(env.items).reduce((a, b) => a + b, 0);
       });
+      badge.innerText = totalUnitsProject;
 
-      const totalUnits = list.reduce((acc, i) => acc + i.qty, 0);
-      badge.innerText = totalUnits;
-
-      if (list.length === 0) {
-        container.innerHTML = `<div class="empty-state">Nenhum equipamento adicionado ainda.<br>Clique no botão (+) dos produtos para compor a lista.</div>`;
+      if (totalUnitsProject === 0 && environments.length === 1 && Object.keys(environments[0].items).length === 0) {
+        container.innerHTML = `
+          <div class="env-group-card active-env-card">
+            <div class="env-card-header">
+              <div class="env-title-box">
+                <span class="env-num-tag">1</span>
+                <input type="text" class="env-name-input" value="${environments[0].name}" 
+                       oninput="updateEnvName('${environments[0].id}', this.value)" 
+                       placeholder="Ex: Sala de Estar">
+              </div>
+              <span class="badge-env-active">Ativo</span>
+            </div>
+            <div class="empty-state" style="padding: 24px 8px;">
+              Nenhum equipamento adicionado ainda.<br>Clique no botão (+) dos produtos para compor este ambiente.
+            </div>
+          </div>
+        `;
         return;
       }
 
-      container.innerHTML = list.map(item => {
-        const img = getProductImage(item);
-        const thumbHtml = img 
-          ? `<img src="${img}" alt="${item.name}" class="cart-thumb">`
-          : `<div class="cart-thumb-empty">⚡</div>`;
+      container.innerHTML = environments.map((env, idx) => {
+        const isActive = env.id === activeEnvId;
+        const items = Object.entries(env.items).map(([id, qty]) => {
+          const item = products.find(p => p.id === id);
+          return { ...item, qty };
+        });
+
+        const envUnits = items.reduce((acc, i) => acc + i.qty, 0);
+
+        const itemsHtml = items.length === 0 
+          ? `<div style="font-size:11px; color:#94a3b8; padding:8px; text-align:center;">Ambiente vazio. Selecione-o e adicione produtos do catálogo.</div>`
+          : items.map(item => {
+              const img = getProductImage(item);
+              const thumbHtml = img 
+                ? `<img src="${img}" alt="${item.name}" class="cart-thumb">`
+                : `<div class="cart-thumb-empty">⚡</div>`;
+
+              return `
+                <div class="cart-item">
+                  ${thumbHtml}
+                  <div style="flex:1; min-width:0;">
+                    <div class="cart-item-title">${item.name}</div>
+                    <div class="cart-item-sub">Cód: ${item.id}</div>
+                  </div>
+                  <div class="qty-control">
+                    <button class="qty-btn" onclick="changeQty('${item.id}', -1, '${env.id}')">-</button>
+                    <input class="qty-input" type="text" readonly value="${item.qty}">
+                    <button class="qty-btn plus" onclick="changeQty('${item.id}', 1, '${env.id}')">+</button>
+                  </div>
+                </div>
+              `;
+            }).join("");
 
         return `
-          <div class="cart-item">
-            ${thumbHtml}
-            <div style="flex:1; min-width:0;">
-              <div class="cart-item-title">${item.name}</div>
-              <div class="cart-item-sub">Cód: ${item.id}</div>
+          <div class="env-group-card ${isActive ? 'active-env-card' : ''}" onclick="setActiveEnv('${env.id}')">
+            <div class="env-card-header">
+              <div class="env-title-box">
+                <span class="env-num-tag">${idx + 1}</span>
+                <input type="text" class="env-name-input" value="${env.name}" 
+                       oninput="updateEnvName('${env.id}', this.value)" 
+                       onclick="event.stopPropagation();"
+                       placeholder="Nome do Ambiente">
+              </div>
+              <div style="display:flex; align-items:center; gap:4px;" onclick="event.stopPropagation();">
+                ${isActive 
+                  ? `<span class="badge-env-active">Ativo</span>` 
+                  : `<button class="btn-select-env" onclick="setActiveEnv('${env.id}')">Selecionar</button>`
+                }
+                ${environments.length > 1 
+                  ? `<button class="btn-delete-env" onclick="removeEnvironment('${env.id}')" title="Excluir este ambiente">🗑️</button>` 
+                  : ''
+                }
+              </div>
             </div>
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
-              <input class="qty-input" type="text" readonly value="${item.qty}">
-              <button class="qty-btn plus" onclick="changeQty('${item.id}', 1)">+</button>
+
+            <div class="env-items-list" onclick="event.stopPropagation();">
+              ${itemsHtml}
+            </div>
+
+            <div class="env-card-footer">
+              <span>Itens: <strong>${items.length}</strong></span>
+              <span>Subtotal: <strong>${envUnits} un</strong></span>
             </div>
           </div>
         `;
@@ -750,7 +896,6 @@
 
       const reader = new FileReader();
       reader.onload = function(evt) {
-        // Redimensionar para tamanho ideal (~400px) para não sobrecarregar o localStorage
         const tempImg = new Image();
         tempImg.onload = function() {
           const maxDim = 450;
@@ -807,48 +952,78 @@
       }
     }
 
+    /* Copiar Lista Formatada por Ambientes */
     function copyList() {
-      const list = Object.entries(selected).map(([id, qty]) => {
-        const item = products.find(p => p.id === id);
-        return { ...item, qty };
+      const client = document.getElementById("projectClient").value.trim() || "Projeto Padrão";
+      const date = new Date().toLocaleDateString('pt-BR');
+
+      let totalAllUnits = 0;
+      let out = `*REDESEC - LISTA DE MATERIAIS DE AUTOMAÇÃO & ÁUDIO*\n`;
+      out += `Projeto: ${client}\nData: ${date}\n`;
+      out += `===================================\n\n`;
+
+      environments.forEach((env, envIdx) => {
+        const items = Object.entries(env.items).map(([id, qty]) => {
+          const item = products.find(p => p.id === id);
+          return { ...item, qty };
+        }).filter(i => i.qty > 0);
+
+        const envUnits = items.reduce((a, b) => a + b.qty, 0);
+        totalAllUnits += envUnits;
+
+        out += `${envIdx + 1}. AMBIENTE: ${env.name.toUpperCase()}\n`;
+        if (items.length === 0) {
+          out += `   (Nenhum equipamento adicionado)\n\n`;
+        } else {
+          items.forEach((i, idx) => {
+            out += `   ${String(idx + 1).padStart(2, '0')}. [${i.qty}x] ${i.name} (Cód: ${i.id})\n`;
+          });
+          out += `   Subtotal: ${envUnits} equipamento(s)\n\n`;
+        }
       });
 
-      if (list.length === 0) {
-        alert("A lista está vazia.");
+      out += `===================================\n`;
+      out += `TOTAL GERAL DO PROJETO: ${totalAllUnits} equipamento(s) em ${environments.length} ambiente(s)\n`;
+
+      if (totalAllUnits === 0) {
+        alert("A lista está vazia. Adicione produtos aos ambientes antes de copiar.");
         return;
       }
 
-      const client = document.getElementById("projectClient").value.trim() || "Projeto Padrão";
-      const date = new Date().toLocaleDateString('pt-BR');
-      let out = `*REDESEC - LISTA DE MATERIAIS DE AUTOMAÇÃO & ÁUDIO*\n`;
-      out += `Projeto: ${client}\nData: ${date}\n-----------------------------------\n`;
-
-      list.forEach((i, idx) => {
-        out += `${String(idx+1).padStart(2,'0')}. [${i.qty}x] ${i.name} (Cód: ${i.id})\n`;
-      });
-      out += `-----------------------------------\nTotal: ${list.reduce((a,b)=>a+b.qty,0)} equipamento(s)\n`;
-
       navigator.clipboard.writeText(out).then(() => {
-        alert("Lista copiada com sucesso!");
+        alert("Lista de materiais copiada por ambientes com sucesso!");
       }).catch(() => {
         prompt("Copie a lista abaixo:", out);
       });
     }
 
+    /* Impressão / Salvar em PDF com Separação por Ambientes */
     function printReport() {
-      const list = Object.entries(selected).map(([id, qty]) => {
-        const item = products.find(p => p.id === id);
-        return { ...item, qty };
+      let totalAllUnits = 0;
+      environments.forEach(env => {
+        totalAllUnits += Object.values(env.items).reduce((a, b) => a + b, 0);
       });
 
-      if (list.length === 0) {
+      if (totalAllUnits === 0) {
         alert("Adicione produtos antes de gerar o relatório.");
         return;
       }
 
-      const client = document.getElementById("projectClient").value.trim() || "Projeto Sem Título";
+      const client = document.getElementById("projectClient").value.trim() || "Casa Eder Bannitz";
       const date = new Date().toLocaleDateString('pt-BR');
-      const total = list.reduce((a,b)=>a+b.qty,0);
+
+      // Tabela consolidada para compras
+      const consolidated = {};
+      environments.forEach(env => {
+        Object.entries(env.items).forEach(([id, qty]) => {
+          consolidated[id] = (consolidated[id] || 0) + qty;
+        });
+      });
+
+      const consolidatedList = Object.entries(consolidated).map(([id, qty]) => {
+        const p = products.find(prod => prod.id === id);
+        return { ...p, qty };
+      });
 
       const html = `
         <!DOCTYPE html>
@@ -857,25 +1032,35 @@
           <meta charset="UTF-8">
           <title>Lista de Materiais - Redesec - ${client}</title>
           <style>
-            @page { size: A4 portrait; margin: 15mm; }
-            body { font-family: sans-serif; color: #0f172a; margin: 0; padding: 0; }
-            .header { border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
-            .header h1 { font-size: 18px; margin: 0; text-transform: uppercase; }
-            .header p { font-size: 12px; color: #64748b; margin: 4px 0 0 0; }
+            @page { size: A4 portrait; margin: 12mm 15mm; }
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #0f172a; margin: 0; padding: 0; }
+            .header { border-bottom: 2px solid #1d4ed8; padding-bottom: 8px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end; }
+            .header h1 { font-size: 17px; margin: 0; text-transform: uppercase; color: #0f172a; }
+            .header p { font-size: 11px; color: #64748b; margin: 3px 0 0 0; }
             .meta { text-align: right; font-size: 11px; color: #475569; }
-            table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
-            th { background: #f1f5f9; padding: 8px 10px; text-align: left; border-bottom: 1px solid #cbd5e1; }
-            td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
-            .qty { font-weight: bold; color: #1d4ed8; font-size: 12px; }
+            
+            .env-block { margin-bottom: 18px; page-break-inside: avoid; }
+            .env-heading { background: #1e293b; color: #fff; padding: 6px 10px; font-size: 12px; font-weight: 700; border-radius: 4px; display: flex; justify-content: space-between; }
+            
+            table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-top: 6px; }
+            th { background: #f1f5f9; padding: 6px 8px; text-align: left; border-bottom: 1px solid #cbd5e1; }
+            td { padding: 6px 8px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+            .qty { font-weight: bold; color: #1d4ed8; font-size: 11.5px; }
             .code { font-family: monospace; color: #64748b; }
-            .img-cell { width: 44px; height: 44px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px; background: #fff; vertical-align: middle; margin-right: 8px; }
-            .footer { border-top: 1px solid #cbd5e1; margin-top: 16px; padding-top: 12px; display: flex; justify-content: space-between; font-size: 12px; }
+            .img-cell { width: 36px; height: 36px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px; background: #fff; vertical-align: middle; margin-right: 6px; }
+            
+            .env-subtotal { background: #f8fafc; font-size: 11px; text-align: right; padding: 6px 8px; font-weight: bold; border: 1px solid #e2e8f0; border-top: none; }
+            
+            .consolidated-section { margin-top: 24px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px; background: #fafcff; page-break-inside: avoid; }
+            .consolidated-title { font-size: 13px; font-weight: 800; color: #1e3a8a; margin-bottom: 8px; text-transform: uppercase; border-bottom: 1px solid #bfdbfe; padding-bottom: 4px; }
+            
+            .footer { border-top: 2px solid #cbd5e1; margin-top: 16px; padding-top: 10px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; }
           </style>
         </head>
         <body>
           <div class="header">
             <div>
-              <h1>Redesec Smart Home • Lista de Materiais de Automação</h1>
+              <h1>Redesec Smart Home • Especificação de Materiais</h1>
               <p>Nice / Fibaro • Control Art • WEG Zigbee • Keypads • Hikvision</p>
             </div>
             <div class="meta">
@@ -883,41 +1068,88 @@
               <div><strong>Data:</strong> ${date}</div>
             </div>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 50px; text-align: center;">Qtd</th>
-                <th style="width: 120px;">Código</th>
-                <th>Produto / Descrição</th>
-                <th style="width: 110px;">Categoria</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${list.map(i => {
-                const img = getProductImage(i);
-                const imgHtml = img ? `<img src="${img}" class="img-cell">` : '';
-                return `
+
+          ${environments.map((env, idx) => {
+            const items = Object.entries(env.items).map(([id, qty]) => {
+              const p = products.find(prod => prod.id === id);
+              return { ...p, qty };
+            }).filter(i => i.qty > 0);
+
+            const envUnits = items.reduce((a, b) => a + b.qty, 0);
+            if (items.length === 0) return '';
+
+            return `
+              <div class="env-block">
+                <div class="env-heading">
+                  <span>${idx + 1}. AMBIENTE: ${env.name.toUpperCase()}</span>
+                  <span>${envUnits} un</span>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width: 45px; text-align: center;">Qtd</th>
+                      <th style="width: 110px;">Código</th>
+                      <th>Equipamento / Descrição</th>
+                      <th style="width: 100px;">Categoria</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${items.map(i => {
+                      const img = getProductImage(i);
+                      const imgHtml = img ? `<img src="${img}" class="img-cell">` : '';
+                      return `
+                        <tr>
+                          <td class="qty" style="text-align: center;">${i.qty} un</td>
+                          <td class="code">${i.id}</td>
+                          <td>
+                            <div style="display: flex; align-items: center;">
+                              ${imgHtml}
+                              <div>
+                                <strong>${i.name}</strong>
+                                <div style="font-size: 9.5px; color: #64748b;">${i.desc}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>${i.cat}</td>
+                        </tr>
+                      `;
+                    }).join("")}
+                  </tbody>
+                </table>
+                <div class="env-subtotal">Subtotal do Ambiente: ${envUnits} equipamento(s)</div>
+              </div>
+            `;
+          }).join("")}
+
+          <!-- Quadro Resumo Consolidado para Compra -->
+          <div class="consolidated-section">
+            <div class="consolidated-title">Resumo Geral Consolidado (Total para Compra do Projeto)</div>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 50px; text-align: center;">Total</th>
+                  <th style="width: 120px;">Código</th>
+                  <th>Produto</th>
+                  <th style="width: 110px;">Categoria</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${consolidatedList.map(i => `
                   <tr>
                     <td class="qty" style="text-align: center;">${i.qty} un</td>
                     <td class="code">${i.id}</td>
-                    <td>
-                      <div style="display: flex; align-items: center;">
-                        ${imgHtml}
-                        <div>
-                          <strong>${i.name}</strong>
-                          <div style="font-size: 10px; color: #64748b; margin-top: 2px;">${i.desc}</div>
-                        </div>
-                      </div>
-                    </td>
+                    <td><strong>${i.name}</strong></td>
                     <td>${i.cat}</td>
                   </tr>
-                `;
-              }).join("")}
-            </tbody>
-          </table>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+
           <div class="footer">
-            <div>Itens Distintos: <strong>${list.length}</strong></div>
-            <div>Total de Equipamentos: <strong>${total} un</strong></div>
+            <div>Total de Ambientes: <strong>${environments.length}</strong></div>
+            <div>Itens Únicos: <strong>${consolidatedList.length}</strong></div>
+            <div>Total Geral de Equipamentos: <strong style="color:#1d4ed8;">${totalAllUnits} un</strong></div>
           </div>
         </body>
         </html>
