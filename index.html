@@ -41,10 +41,75 @@
     }
     
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 13px; color: var(--text-muted); }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 16px; }
     
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .card:hover { border-color: #93c5fd; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    
+    /* Área de Imagem do Card */
+    .card-image-box {
+      width: 100%;
+      height: 140px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .card-image-box:hover {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+    .card-image-box.has-img {
+      border: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .card-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+    }
+    .card-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .card-image-placeholder .icon {
+      font-size: 22px;
+    }
+    .btn-edit-img {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(15, 23, 42, 0.78);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      backdrop-filter: blur(4px);
+      transition: 0.2s;
+    }
+    .btn-edit-img:hover {
+      background: var(--primary);
+    }
+
     .card-badge { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--primary); background: #eff6ff; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
     .card-code { font-size: 11px; color: var(--text-muted); font-family: monospace; float: right; }
     .card h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
@@ -76,7 +141,9 @@
     
     .cart-items { flex: 1; overflow-y: auto; margin-bottom: 12px; padding-right: 4px; display: flex; flex-direction: column; gap: 8px; }
     .cart-item { background: #f8fafc; border: 1px solid var(--border); padding: 8px 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .cart-item-title { font-size: 12px; font-weight: 600; color: #1e293b; }
+    .cart-thumb { width: 36px; height: 36px; border-radius: 4px; object-fit: contain; background: #fff; border: 1px solid var(--border); flex-shrink: 0; }
+    .cart-thumb-empty { width: 36px; height: 36px; border-radius: 4px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #64748b; flex-shrink: 0; }
+    .cart-item-title { font-size: 12px; font-weight: 600; color: #1e293b; line-height: 1.2; }
     .cart-item-sub { font-size: 10px; color: #64748b; font-family: monospace; }
     
     .sidebar-actions { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border); padding-top: 12px; }
@@ -87,6 +154,176 @@
     .btn-print:hover { background: var(--primary-hover); }
 
     .empty-state { text-align: center; padding: 40px 10px; color: #94a3b8; font-size: 12px; }
+
+    /* Modal de Inserir Imagem */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .modal-header h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .modal-header p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+    .modal-close:hover { color: #0f172a; }
+
+    .modal-preview {
+      width: 100%;
+      height: 160px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .modal-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .modal-preview-empty {
+      color: #94a3b8;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-field {
+      margin-bottom: 12px;
+    }
+    .modal-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 4px;
+    }
+    .modal-field input[type="url"],
+    .modal-field input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      outline: none;
+    }
+    .modal-field input[type="url"]:focus,
+    .modal-field input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    .modal-divider {
+      text-align: center;
+      position: relative;
+      margin: 14px 0;
+    }
+    .modal-divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--border);
+    }
+    .modal-divider span {
+      position: relative;
+      background: #fff;
+      padding: 0 10px;
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .btn-modal {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-modal-cancel {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border);
+    }
+    .btn-modal-cancel:hover { background: #e2e8f0; }
+    .btn-modal-remove {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      margin-right: auto;
+    }
+    .btn-modal-remove:hover { background: #fecaca; }
+    .btn-modal-save {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+    }
+    .btn-modal-save:hover { background: var(--primary-hover); }
   </style>
 </head>
 <body>
@@ -113,7 +350,7 @@
     <section>
       <div class="section-header">
         <strong id="counterText">0 produtos disponíveis</strong>
-        <span>Altere as quantidades para compor o projeto</span>
+        <span>Clique na imagem para adicionar ou alterar a foto</span>
       </div>
       <div class="product-grid" id="productGrid"></div>
     </section>
@@ -138,26 +375,70 @@
     </aside>
   </main>
 
+  <!-- Modal para Inserir / Alterar Imagem -->
+  <div class="modal-overlay" id="imageModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalProdName">Adicionar Imagem</h3>
+          <p id="modalProdCode">Código do Produto</p>
+        </div>
+        <button class="modal-close" onclick="closeImageModal()">&times;</button>
+      </div>
+
+      <!-- Pré-visualização -->
+      <div class="modal-preview" id="modalPreviewContainer">
+        <div class="modal-preview-empty" id="modalPreviewEmpty">
+          <span style="font-size: 26px;">🖼️</span>
+          <span>Nenhuma imagem selecionada</span>
+        </div>
+        <img id="modalPreviewImg" src="" alt="Preview" style="display:none;">
+      </div>
+
+      <!-- Opção 1: Upload de Arquivo do Dispositivo -->
+      <div class="modal-field">
+        <label>📂 Carregar foto do computador / celular:</label>
+        <input type="file" id="modalFileInput" accept="image/*" onchange="handleModalFileUpload(event)">
+      </div>
+
+      <div class="modal-divider">
+        <span>OU</span>
+      </div>
+
+      <!-- Opção 2: Link / URL da Imagem -->
+      <div class="modal-field">
+        <label>🌐 Colar link / URL da imagem:</label>
+        <input type="url" id="modalUrlInput" placeholder="https://exemplo.com/imagem-produto.jpg" oninput="handleModalUrlInput(event)">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-modal btn-modal-remove" id="btnModalRemove" onclick="removeProductImage()" style="display:none;">🗑️ Remover Imagem</button>
+        <button class="btn-modal btn-modal-cancel" onclick="closeImageModal()">Cancelar</button>
+        <button class="btn-modal btn-modal-save" onclick="saveProductImage()">Salvar Imagem</button>
+      </div>
+    </div>
+  </div>
+
   <iframe id="printIframe" style="display:none;"></iframe>
 
   <script>
     const products = [
       // 1. Centrais
-      { id: "70001597", name: "Home Center 3", cat: "Centrais", badge: "Gateway Z-Wave & Nice RF", desc: "Central principal e de alta performance para projetos de médio e alto padrão. Automação 100% local, scripts em Lua e integração nativa.", feats: ["Operação 100% local", "Suporte a QuickApps e Lua", "Z-Wave, Nice RF e IP"] },
-      { id: "70001594", name: "Yubii Home", cat: "Centrais", badge: "Gateway Modular", desc: "Gateway compacto ideal para residências e apartamentos, integrando motores Nice e sensores Fibaro em um único ecossistema.", feats: ["Wi-Fi e expansível via cabo", "Integração Nice + Fibaro", "Compatível com Alexa/Google"] },
+      { id: "70001597", name: "Home Center 3", cat: "Centrais", badge: "Gateway Z-Wave & Nice RF", desc: "Central principal e de alta performance para projetos de médio e alto padrão. Automação 100% local, scripts em Lua e integração nativa.", feats: ["Operação 100% local", "Suporte a QuickApps e Lua", "Z-Wave, Nice RF e IP"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91601-300x300.webp?version=20260722225938" },
+      { id: "70001594", name: "Yubii Home", cat: "Centrais", badge: "Gateway Modular", desc: "Gateway compacto ideal para residências e apartamentos, integrando motores Nice e sensores Fibaro em um único ecossistema.", feats: ["Wi-Fi e expansível via cabo", "Integração Nice + Fibaro", "Compatível com Alexa/Google"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_92201-300x300.webp?version=20260625111420" },
 
       // 2. Módulos Z-Wave
-      { id: "10007174", name: "Switch On/Off Control", cat: "Módulos Z-Wave", badge: "Relé Duplo", desc: "Módulo relé de embutir microcontrolado para 2 circuitos independentes de iluminação ou cargas elétricas.", feats: ["Medição de consumo ativo", "2 canais em 1 caixa 4x2", "Mantém teclas manuais"] },
-      { id: "70001581", name: "Dimmer Control", cat: "Módulos Z-Wave", badge: "Dimerização 1CH", desc: "Módulo de dimerização gradual para lâmpadas LED e convencionais com autocalibração inteligente.", feats: ["Autocalibração anti-flicker", "Instalação com ou sem neutro", "Acendimento suave (Soft Start)"] },
-      { id: "70001580", name: "Roll Control", cat: "Módulos Z-Wave", badge: "Persianas AC", desc: "Módulo inteligente para persianas motorizadas, cortinas, venezianas e telas retráteis AC.", feats: ["Posicionamento milimétrico em %", "Controle de lâminas venetian", "Medição de consumo elétrico"] },
-      { id: "70001583", name: "RGBW Control", cat: "Módulos Z-Wave", badge: "LED RGBW & 0-10V", desc: "Controlador para fitas LED coloridas 12V/24V ou 4 circuitos independentes de fitas monocromáticas.", feats: ["4 entradas analógicas 0-10V", "Cenas dinâmicas pré-programadas"] },
+      { id: "10007174", name: "Switch On/Off Control", cat: "Módulos Z-Wave", badge: "Relé Duplo", desc: "Módulo relé de embutir microcontrolado para 2 circuitos independentes de iluminação ou cargas elétricas.", feats: ["Medição de consumo ativo", "2 canais em 1 caixa 4x2", "Mantém teclas manuais"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_93701-300x300.webp?version=20260916174250" },
+      { id: "70001581", name: "Dimmer Control", cat: "Módulos Z-Wave", badge: "Dimerização 1CH", desc: "Módulo de dimerização gradual para lâmpadas LED e convencionais com autocalibração inteligente.", feats: ["Autocalibração anti-flicker", "Instalação com ou sem neutro", "Acendimento suave (Soft Start)"], img: "" },
+      { id: "70001580", name: "Roll Control", cat: "Módulos Z-Wave", badge: "Persianas AC", desc: "Módulo inteligente para persianas motorizadas, cortinas, venezianas e telas retráteis AC.", feats: ["Posicionamento milimétrico em %", "Controle de lâminas venetian", "Medição de consumo elétrico"], img: "" },
+      { id: "70001583", name: "RGBW Control", cat: "Módulos Z-Wave", badge: "LED RGBW & 0-10V", desc: "Controlador para fitas LED coloridas 12V/24V ou 4 circuitos independentes de fitas monocromáticas.", feats: ["4 entradas analógicas 0-10V", "Cenas dinâmicas pré-programadas"], img: "" },
 
       // 3. Sensores
-      { id: "70001585", name: "Multi Sensor", cat: "Sensores", badge: "Sensor 4 em 1", desc: "Detector ultracompacto a bateria: presença humana, temperatura, luminosidade e acelerômetro.", feats: ["Presença, Lux, Temp e Impacto", "LED colorido inteligente", "Bateria de longa duração"] },
-      { id: "70001589", name: "Door / Window Sensor", cat: "Sensores", badge: "Abertura Magnética", desc: "Sensor magnético sem fio de contato para portas, janelas e gavetas com sensor térmico.", feats: ["Detecção de abertura imediata", "Sensor térmico embutido", "Design discreto"] },
-      { id: "70001586", name: "Flood Sensor", cat: "Sensores", badge: "Alagamento", desc: "Sensor sem fio de detecção de vazamento de água para áreas molhadas e casas de máquinas.", feats: ["Sondas em ouro telescópicas", "Flutua e emite alarme sonoro", "Prevenção contra inundações"] },
-      { id: "70001587", name: "Smoke Sensor", cat: "Sensores", badge: "Fumaça & Calor", desc: "Sensor óptico de fumaça e elevação súbita de calor com alarme sonoro local integrado.", feats: ["Grelha eletropolida anti-poeira", "Sirene acústica embutida"] },
-      { id: "70001610", name: "CO Sensor", cat: "Sensores", badge: "Monóxido Carbono", desc: "Detector de segurança de vida para monóxido de carbono com alerta local autônomo.", feats: ["Certificação de segurança", "Leitura precisa em PPM"] },
+      { id: "70001585", name: "Multi Sensor", cat: "Sensores", badge: "Sensor 4 em 1", desc: "Detector ultracompacto a bateria: presença humana, temperatura, luminosidade e acelerômetro.", feats: ["Presença, Lux, Temp e Impacto", "LED colorido inteligente", "Bateria de longa duração"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91801-300x300.webp?version=20260811210144" },
+      { id: "70001589", name: "Door / Window Sensor", cat: "Sensores", badge: "Abertura Magnética", desc: "Sensor magnético sem fio de contato para portas, janelas e gavetas com sensor térmico.", feats: ["Detecção de abertura imediata", "Sensor térmico embutido", "Design discreto"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91401-300x300.webp?version=20260625111458" },
+      { id: "70001586", name: "Flood Sensor", cat: "Sensores", badge: "Alagamento", desc: "Sensor sem fio de detecção de vazamento de água para áreas molhadas e casas de máquinas.", feats: ["Sondas em ouro telescópicas", "Flutua e emite alarme sonoro", "Prevenção contra inundações"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_91501-300x300.webp?version=20260716141934" },
+      { id: "70001587", name: "Smoke Sensor", cat: "Sensores", badge: "Fumaça & Calor", desc: "Sensor óptico de fumaça e elevação súbita de calor com alarme sonoro local integrado.", feats: ["Grelha eletropolida anti-poeira", "Sirene acústica embutida"], img: "https://portal.redesec.com.br/image/cache/data/eftr/Img_ftr_rp_92101-300x300.webp?version=20260716141531" },
+      { id: "70001610", name: "CO Sensor", cat: "Sensores", badge: "Monóxido Carbono", desc: "Detector de segurança de vida para monóxido de carbono com alerta local autônomo.", feats: ["Certificação de segurança", "Leitura precisa em PPM"], img: "" },
 
       // 4. Interfaces
       { 
@@ -171,59 +452,87 @@
           "Sistema Android para instalação de apps de automação", 
           "Alimentação PoE padrão (IEEE802.3af) e conexão Wi-Fi", 
           "Visualização em tempo real de câmeras CFTV e abertura de travas"
-        ] 
+        ],
+        img: "" 
       },
-      { id: "70001584", name: "Smart Control / Smart Implant", cat: "Interfaces", badge: "Interface Universal", desc: "Módulo de baixa tensão (9-30V DC) com 2 entradas analógicas/digitais e 2 contatos secos.", feats: ["2 entradas + 2 contatos secos", "Suporta sondas DS18B20", "Integra portões e alarmes"] },
+      { id: "70001584", name: "Smart Control / Smart Implant", cat: "Interfaces", badge: "Interface Universal", desc: "Módulo de baixa tensão (9-30V DC) com 2 entradas analógicas/digitais e 2 contatos secos.", feats: ["2 entradas + 2 contatos secos", "Suporta sondas DS18B20", "Integra portões e alarmes"], img: "" },
 
       // 5. Controles
-      { id: "70001591", name: "The Button", cat: "Controles", badge: "Botão de Cenas", desc: "Botão sem fio compacto para acionamento de rotinas completas ou pânico silencioso.", feats: ["Reconhece até 6 ações de clique", "Design retrô versátil"] },
-      { id: "70001598", name: "KeyFob", cat: "Controles", badge: "Chaveiro Z-Wave", desc: "Controle portátil com 6 botões anatômicos para portões, iluminação e alarmes.", feats: ["Até 30 ações configuráveis", "Proteção por código PIN"] },
-      { id: "20007702", name: "Controle Remoto Nice BiDi 1 Canal", cat: "Controles", badge: "RF 433MHz BiDi", desc: "Emissor Nice para acionamento de 1 automação com retorno visual de status BiDi.", feats: ["Feedback por LED", "Comunicação direta"] },
-      { id: "20007703", name: "Controle Remoto Nice BiDi 6 Canais", cat: "Controles", badge: "RF 433MHz BiDi", desc: "Emissor multicanal para até 6 automações independentes ou grupos Nice.", feats: ["Comando individual ou em grupo", "Sinalizador BiDi"] },
-      { id: "20007706", name: "Controle Nice BiDi 6 Canais + Slider", cat: "Controles", badge: "RF BiDi com Slider", desc: "Emissor com barra sensível ao toque para ajuste percentual suave de persianas ou luz.", feats: ["Slider tátil deslizante", "Comunicação bidirecional"] },
+      { id: "70001591", name: "The Button", cat: "Controles", badge: "Botão de Cenas", desc: "Botão sem fio compacto para acionamento de rotinas completas ou pânico silencioso.", feats: ["Reconhece até 6 ações de clique", "Design retrô versátil"], img: "" },
+      { id: "70001598", name: "KeyFob", cat: "Controles", badge: "Chaveiro Z-Wave", desc: "Controle portátil com 6 botões anatômicos para portões, iluminação e alarmes.", feats: ["Até 30 ações configuráveis", "Proteção por código PIN"], img: "" },
+      { id: "20007702", name: "Controle Remoto Nice BiDi 1 Canal", cat: "Controles", badge: "RF 433MHz BiDi", desc: "Emissor Nice para acionamento de 1 automação com retorno visual de status BiDi.", feats: ["Feedback por LED", "Comunicação direta"], img: "" },
+      { id: "20007703", name: "Controle Remoto Nice BiDi 6 Canais", cat: "Controles", badge: "RF 433MHz BiDi", desc: "Emissor multicanal para até 6 automações independentes ou grupos Nice.", feats: ["Comando individual ou em grupo", "Sinalizador BiDi"], img: "" },
+      { id: "20007706", name: "Controle Nice BiDi 6 Canais + Slider", cat: "Controles", badge: "RF BiDi com Slider", desc: "Emissor com barra sensível ao toque para ajuste percentual suave de persianas ou luz.", feats: ["Slider tátil deslizante", "Comunicação bidirecional"], img: "" },
 
       // 6. Módulos Zigbee
-      { id: "18290398", name: "Interruptor Touch 4 Botões WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor inteligente touch com 4 canais independentes em vidro temperado preto com placa 4x2.", feats: ["Rede em malha Zigbee", "Vidro temperado preto", "Backlight suave"] },
-      { id: "18290400", name: "Interruptor Touch 4 Botões WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor inteligente touch com 4 canais independentes em vidro temperado branco com placa 4x2.", feats: ["Rede em malha Zigbee", "Vidro temperado branco", "Backlight suave"] },
-      { id: "18290401", name: "Interruptor Touch 3 Botões WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch capacitivo com 3 canais em vidro temperado preto.", feats: ["Comunicação Zigbee", "Vidro temperado preto"] },
-      { id: "18290402", name: "Interruptor Touch 3 Botões WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch capacitivo com 3 canais em vidro temperado branco.", feats: ["Comunicação Zigbee", "Vidro temperado branco"] },
-      { id: "18290403", name: "Interruptor Touch 2 Botões WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 2 canais independentes em acabamento vidro temperado preto.", feats: ["Função repetidora Zigbee", "Vidro temperado preto"] },
-      { id: "18290404", name: "Interruptor Touch 2 Botões WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 2 canais independentes em acabamento vidro temperado branco.", feats: ["Função repetidora Zigbee", "Vidro temperado branco"] },
-      { id: "18290405", name: "Interruptor Touch 1 Botão WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 1 canal amplo em vidro temperado preto.", feats: ["Circuito dedicado", "Vidro temperado preto"] },
-      { id: "18290406", name: "Interruptor Touch 1 Botão WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 1 canal amplo em vidro temperado branco.", feats: ["Circuito dedicado", "Vidro temperado branco"] },
+      { id: "18290398", name: "Interruptor Touch 4 Botões WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor inteligente touch com 4 canais independentes em vidro temperado preto com placa 4x2.", feats: ["Rede em malha Zigbee", "Vidro temperado preto", "Backlight suave"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290400", name: "Interruptor Touch 4 Botões WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor inteligente touch com 4 canais independentes em vidro temperado branco com placa 4x2.", feats: ["Rede em malha Zigbee", "Vidro temperado branco", "Backlight suave"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290401", name: "Interruptor Touch 3 Botões WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch capacitivo com 3 canais em vidro temperado preto.", feats: ["Comunicação Zigbee", "Vidro temperado preto"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290402", name: "Interruptor Touch 3 Botões WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch capacitivo com 3 canais em vidro temperado branco.", feats: ["Comunicação Zigbee", "Vidro temperado branco"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290403", name: "Interruptor Touch 2 Botões WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 2 canais independentes em acabamento vidro temperado preto.", feats: ["Função repetidora Zigbee", "Vidro temperado preto"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290404", name: "Interruptor Touch 2 Botões WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 2 canais independentes em acabamento vidro temperado branco.", feats: ["Função repetidora Zigbee", "Vidro temperado branco"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290405", name: "Interruptor Touch 1 Botão WHOME (Preto)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 1 canal amplo em vidro temperado preto.", feats: ["Circuito dedicado", "Vidro temperado preto"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
+      { id: "18290406", name: "Interruptor Touch 1 Botão WHOME (Branco)", cat: "Módulos Zigbee", badge: "Touch Zigbee 4x2", desc: "Interruptor touch com 1 canal amplo em vidro temperado branco.", feats: ["Circuito dedicado", "Vidro temperado branco"], img: "https://lh3.googleusercontent.com/d/1yDDvQKK6Oiw46AfNYDom1oxRbEjN3P0n" },
 
       // 7. Keypads
-      { id: "KP-FLAT-4X2-6B", name: "Keypad Pulsador Flat 4x2 - 6 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Design reto contemporâneo com 6 teclas planas para acionamento de módulos relé ou CLPs em caixa 4x2.", feats: ["6 comandos em 1 ponto 4x2", "Cores: Branco, Grafite e Preto", "Contato seco suave"] },
-      { id: "KP-FLAT-4X2-4B", name: "Keypad Pulsador Flat 4x2 - 4 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad plano minimalista com 4 teclas retas simétricas em padrão 4x2.", feats: ["Design minimalista", "Cores: Branco, Grafite e Preto", "Acionamento universal"] },
-      { id: "KP-FLAT-4X2-3B", name: "Keypad Pulsador Flat 4x2 - 3 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad com 3 teclas retas planas para controle de cenas e circuitos em caixa padrão 4x2.", feats: ["Ergonomia simétrica", "Cores: Branco, Grafite e Preto"] },
-      { id: "KP-FLAT-4X2-2B", name: "Keypad Pulsador Flat 4x2 - 2 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad com 2 teclas planas largas para cabeceiras e áreas sociais.", feats: ["Teclas amplas", "Cores: Branco, Grafite e Preto"] },
-      { id: "KP-FLAT-4X2-1B", name: "Keypad Pulsador Flat 4x2 - 1 Botão", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad com 1 tecla plana de grande formato para acionamento geral ou mestre.", feats: ["Tecla única ampla", "Cores: Branco, Grafite e Preto"] },
-      { id: "KP-FLAT-4X4", name: "Keypad Pulsador Flat 4x4", cat: "Keypads", badge: "Pulsador Flat 4x4", desc: "Espelho duplo quadrado 4x4 para montagem expandida de teclas planas.", feats: ["Padrão 4x4", "Cores: Branco, Grafite e Preto"] },
-      { id: "KP-FLAT-4X4-CEGO", name: "Placa Cega Flat 4x4", cat: "Keypads", badge: "Acabamento 4x4 Cego", desc: "Espelho cego 4x4 para padronização arquitetônica de caixas de passagem.", feats: ["Cores: Branco, Grafite e Preto"] },
-      { id: "KP-BLINKER-4X2-4B", name: "Keypad Pulsador Blinker 4x2 - 4 Botões com LED", cat: "Keypads", badge: "Blinker LED 4x2", desc: "Pulsador de toque seco suave com confirmação luminosa imediata por LED integrado em cada tecla.", feats: ["LED de feedback em cada botão", "Cores: Branco e Preto", "Toque seco anatômico"] },
-      { id: "KP-BLINKER-4X2-3B", name: "Keypad Pulsador Blinker 4x2 - 3 Botões com LED", cat: "Keypads", badge: "Blinker LED 4x2", desc: "Keypad com 3 teclas iluminadas individualmente por LED em placa 4x2.", feats: ["Feedback por LED", "Cores: Branco e Preto"] },
-      { id: "KP-BLINKER-4X4", name: "Keypad Pulsador Blinker 4x4 com LED", cat: "Keypads", badge: "Blinker LED 4x4", desc: "Painel duplo quadrado padrão 4x4 com teclas pulsadoras e LEDs indicadores de estado.", feats: ["Painel duplo 4x4", "Cores: Branco e Preto"] },
-      { id: "KP-BLINKER-FONTE", name: "Fonte Mini para Keypad Blinker", cat: "Keypads", badge: "Acessório Técnico", desc: "Módulo compacto de alimentação estabilizada para os circuitos de LED dos keypads Blinker.", feats: ["Alimentação contínua de LEDs", "Montagem compacta"] },
+      { id: "KP-FLAT-4X2-6B", name: "Keypad Pulsador Flat 4x2 - 6 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Design reto contemporâneo com 6 teclas planas para acionamento de módulos relé ou CLPs em caixa 4x2.", feats: ["6 comandos em 1 ponto 4x2", "Cores: Branco, Grafite e Preto", "Contato seco suave"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-FLAT-4X2-4B", name: "Keypad Pulsador Flat 4x2 - 4 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad plano minimalista com 4 teclas retas simétricas em padrão 4x2.", feats: ["Design minimalista", "Cores: Branco, Grafite e Preto", "Acionamento universal"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-FLAT-4X2-3B", name: "Keypad Pulsador Flat 4x2 - 3 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad com 3 teclas retas planas para controle de cenas e circuitos em caixa padrão 4x2.", feats: ["Ergonomia simétrica", "Cores: Branco, Grafite e Preto"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-FLAT-4X2-2B", name: "Keypad Pulsador Flat 4x2 - 2 Botões", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad com 2 teclas planas largas para cabeceiras e áreas sociais.", feats: ["Teclas amplas", "Cores: Branco, Grafite e Preto"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-FLAT-4X2-1B", name: "Keypad Pulsador Flat 4x2 - 1 Botão", cat: "Keypads", badge: "Pulsador Flat 4x2", desc: "Keypad com 1 tecla plana de grande formato para acionamento geral ou mestre.", feats: ["Tecla única ampla", "Cores: Branco, Grafite e Preto"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-FLAT-4X4", name: "Keypad Pulsador Flat 4x4", cat: "Keypads", badge: "Pulsador Flat 4x4", desc: "Espelho duplo quadrado 4x4 para montagem expandida de teclas planas.", feats: ["Padrão 4x4", "Cores: Branco, Grafite e Preto"], img: "https://xcene.com.br/assets/pulsador-4x4-grey.webp" },
+      { id: "KP-FLAT-4X4-CEGO", name: "Placa Cega Flat 4x4", cat: "Keypads", badge: "Acabamento 4x4 Cego", desc: "Espelho cego 4x4 para padronização arquitetônica de caixas de passagem.", feats: ["Cores: Branco, Grafite e Preto"], img: "https://xcene.com.br/assets/pulsador-4x4-grey.webp" },
+      { id: "KP-BLINKER-4X2-4B", name: "Keypad Pulsador Blinker 4x2 - 4 Botões com LED", cat: "Keypads", badge: "Blinker LED 4x2", desc: "Pulsador de toque seco suave com confirmação luminosa imediata por LED integrado em cada tecla.", feats: ["LED de feedback em cada botão", "Cores: Branco e Preto", "Toque seco anatômico"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-BLINKER-4X2-3B", name: "Keypad Pulsador Blinker 4x2 - 3 Botões com LED", cat: "Keypads", badge: "Blinker LED 4x2", desc: "Keypad com 3 teclas iluminadas individualmente por LED em placa 4x2.", feats: ["Feedback por LED", "Cores: Branco e Preto"], img: "https://xcene.com.br/assets/keypad-7btn.webp" },
+      { id: "KP-BLINKER-4X4", name: "Keypad Pulsador Blinker 4x4 com LED", cat: "Keypads", badge: "Blinker LED 4x4", desc: "Painel duplo quadrado padrão 4x4 com teclas pulsadoras e LEDs indicadores de estado.", feats: ["Painel duplo 4x4", "Cores: Branco e Preto"], img: "https://xcene.com.br/assets/pulsador-4x4-grey.webp" },
+      { id: "KP-BLINKER-FONTE", name: "Fonte Mini para Keypad Blinker", cat: "Keypads", badge: "Acessório Técnico", desc: "Módulo compacto de alimentação estabilizada para os circuitos de LED dos keypads Blinker.", feats: ["Alimentação contínua de LEDs", "Montagem compacta"], img: "" },
 
       // 8. IR/RF
-      { id: "7PORT", name: "7PORT - Gateway IR e RF / CLP", cat: "IR/RF", badge: "Gateway IR/RF", desc: "Controladora programável e gateway avançado para comandos via Infravermelho e Rádio Frequência (climatização e A/V).", feats: ["7 portas configuráveis", "Lógica programável", "Integração via rede IP/serial"] },
+      { id: "7PORT", name: "7PORT - Gateway IR e RF / CLP", cat: "IR/RF", badge: "Gateway IR/RF", desc: "Controladora programável e gateway avançado para comandos via Infravermelho e Rádio Frequência (climatização e A/V).", feats: ["7 portas configuráveis", "Lógica programável", "Integração via rede IP/serial"], img: "https://www.controlart.com.br/wp-content/uploads/2025/07/7Port-Serial.png" },
 
       // 9. Multiroom
-      { id: "MR8X8-250-ST", name: "MR8X8-250-ST - Sistema Multiroom", cat: "Multiroom", badge: "Multiroom 8x8", desc: "Sistema de sonorização multiroom de alta potência: 8 fontes de áudio distribuídas para 8 zonas amplificadas.", feats: ["Matriz real 8x8", "250W por canal com alta pureza", "Integração direta com automação"] },
+      { id: "MR8X8-250-ST", name: "MR8X8-250-ST - Sistema Multiroom", cat: "Multiroom", badge: "Multiroom 8x8", desc: "Sistema de sonorização multiroom de alta potência: 8 fontes de áudio distribuídas para 8 zonas amplificadas.", feats: ["Matriz real 8x8", "250W por canal com alta pureza", "Integração direta com automação"], img: "https://www.controlart.com.br/wp-content/uploads/2025/12/Banner-principal.webp" },
 
       // 10. Acessórios
-      { id: "10006814", name: "Led Adaptor / Bypass 2", cat: "Acessórios", badge: "Filtro Supressor", desc: "Acessório para ligação em paralelo com lâmpadas LED conectadas ao Dimmer.", feats: ["Elimina brilho fantasma (*glow*)", "Garante estabilidade sem neutro"] },
-      { id: "70001658", name: "HubNetworkLink", cat: "Acessórios", badge: "Cabo Ethernet", desc: "Cabo adaptador de rede oficial para conectar a Yubii Home à rede Ethernet cabeada.", feats: ["Conexão RJ-45 direta", "Maior estabilidade sem Wi-Fi"] }
+      { id: "10006814", name: "Led Adaptor / Bypass 2", cat: "Acessórios", badge: "Filtro Supressor", desc: "Acessório para ligação em paralelo com lâmpadas LED conectadas ao Dimmer.", feats: ["Elimina brilho fantasma (*glow*)", "Garante estabilidade sem neutro"], img: "" },
+      { id: "70001658", name: "HubNetworkLink", cat: "Acessórios", badge: "Cabo Ethernet", desc: "Cabo adaptador de rede oficial para conectar a Yubii Home à rede Ethernet cabeada.", feats: ["Conexão RJ-45 direta", "Maior estabilidade sem Wi-Fi"], img: "" }
     ];
 
     let selected = {};
     let activeCat = "Todos";
     let search = "";
+    let customImages = {}; // Armazena imagens personalizadas salvas no localStorage
+    let activeModalProductId = null;
+    let pendingModalImage = null;
 
     function init() {
+      loadCustomImages();
       renderCategories();
       renderProducts();
       renderCart();
+    }
+
+    function loadCustomImages() {
+      try {
+        const stored = localStorage.getItem("redesec_product_images");
+        if (stored) {
+          customImages = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.warn("Não foi possível carregar as imagens do localStorage:", e);
+      }
+    }
+
+    function saveCustomImages() {
+      try {
+        localStorage.setItem("redesec_product_images", JSON.stringify(customImages));
+      } catch (e) {
+        alert("Atenção: Limite de armazenamento local atingido. Tente usar links de imagens da internet ou imagens menores.");
+      }
+    }
+
+    function getProductImage(prod) {
+      return customImages[prod.id] || prod.img || "";
     }
 
     function renderCategories() {
@@ -277,9 +586,28 @@
 
       grid.innerHTML = filtered.map(p => {
         const qty = selected[p.id] || 0;
+        const img = getProductImage(p);
+
+        const imageHtml = img 
+          ? `
+            <div class="card-image-box has-img" onclick="openImageModal('${p.id}')">
+              <img src="${img}" alt="${p.name}" onerror="this.src=''; this.parentElement.classList.remove('has-img');">
+              <button class="btn-edit-img" onclick="event.stopPropagation(); openImageModal('${p.id}')" title="Alterar foto">📷 Alterar</button>
+            </div>
+          `
+          : `
+            <div class="card-image-box" onclick="openImageModal('${p.id}')">
+              <div class="card-image-placeholder">
+                <span class="icon">📷</span>
+                <span>Inserir Imagem</span>
+              </div>
+            </div>
+          `;
+
         return `
           <div class="card">
             <div>
+              ${imageHtml}
               <div>
                 <span class="card-badge">${p.badge}</span>
                 <span class="card-code">Cód: ${p.id}</span>
@@ -343,19 +671,140 @@
         return;
       }
 
-      container.innerHTML = list.map(item => `
-        <div class="cart-item">
-          <div style="flex:1; min-width:0;">
-            <div class="cart-item-title">${item.name}</div>
-            <div class="cart-item-sub">Cód: ${item.id}</div>
+      container.innerHTML = list.map(item => {
+        const img = getProductImage(item);
+        const thumbHtml = img 
+          ? `<img src="${img}" alt="${item.name}" class="cart-thumb">`
+          : `<div class="cart-thumb-empty">⚡</div>`;
+
+        return `
+          <div class="cart-item">
+            ${thumbHtml}
+            <div style="flex:1; min-width:0;">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-sub">Cód: ${item.id}</div>
+            </div>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
+              <input class="qty-input" type="text" readonly value="${item.qty}">
+              <button class="qty-btn plus" onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
           </div>
-          <div class="qty-control">
-            <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
-            <input class="qty-input" type="text" readonly value="${item.qty}">
-            <button class="qty-btn plus" onclick="changeQty('${item.id}', 1)">+</button>
-          </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
+    }
+
+    /* Modal de Imagem */
+    function openImageModal(prodId) {
+      activeModalProductId = prodId;
+      const prod = products.find(p => p.id === prodId);
+      if (!prod) return;
+
+      document.getElementById("modalProdName").innerText = prod.name;
+      document.getElementById("modalProdCode").innerText = `Código: ${prod.id} • ${prod.cat}`;
+
+      const currentImg = getProductImage(prod);
+      pendingModalImage = currentImg;
+
+      document.getElementById("modalFileInput").value = "";
+      document.getElementById("modalUrlInput").value = currentImg.startsWith("data:") ? "" : currentImg;
+
+      updateModalPreview(currentImg);
+
+      const btnRemove = document.getElementById("btnModalRemove");
+      btnRemove.style.display = currentImg ? "inline-block" : "none";
+
+      document.getElementById("imageModal").classList.add("active");
+    }
+
+    function closeImageModal() {
+      document.getElementById("imageModal").classList.remove("active");
+      activeModalProductId = null;
+      pendingModalImage = null;
+    }
+
+    function updateModalPreview(src) {
+      const img = document.getElementById("modalPreviewImg");
+      const empty = document.getElementById("modalPreviewEmpty");
+
+      if (src && src.trim() !== "") {
+        img.src = src;
+        img.style.display = "block";
+        empty.style.display = "none";
+      } else {
+        img.src = "";
+        img.style.display = "none";
+        empty.style.display = "flex";
+      }
+    }
+
+    function handleModalUrlInput(e) {
+      const url = e.target.value.trim();
+      pendingModalImage = url;
+      updateModalPreview(url);
+    }
+
+    function handleModalFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        // Redimensionar para tamanho ideal (~400px) para não sobrecarregar o localStorage
+        const tempImg = new Image();
+        tempImg.onload = function() {
+          const maxDim = 450;
+          let width = tempImg.width;
+          let height = tempImg.height;
+
+          if (width > height && width > maxDim) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else if (height > maxDim) {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(tempImg, 0, 0, width, height);
+
+          const compressed = canvas.toDataURL("image/jpeg", 0.85);
+          pendingModalImage = compressed;
+          document.getElementById("modalUrlInput").value = "";
+          updateModalPreview(compressed);
+        };
+        tempImg.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProductImage() {
+      if (!activeModalProductId) return;
+
+      if (pendingModalImage && pendingModalImage.trim() !== "") {
+        customImages[activeModalProductId] = pendingModalImage.trim();
+      } else {
+        delete customImages[activeModalProductId];
+      }
+
+      saveCustomImages();
+      closeImageModal();
+      renderProducts();
+      renderCart();
+    }
+
+    function removeProductImage() {
+      if (!activeModalProductId) return;
+      if (confirm("Deseja remover a imagem deste produto?")) {
+        delete customImages[activeModalProductId];
+        saveCustomImages();
+        closeImageModal();
+        renderProducts();
+        renderCart();
+      }
     }
 
     function copyList() {
@@ -416,9 +865,10 @@
             .meta { text-align: right; font-size: 11px; color: #475569; }
             table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
             th { background: #f1f5f9; padding: 8px 10px; text-align: left; border-bottom: 1px solid #cbd5e1; }
-            td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+            td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
             .qty { font-weight: bold; color: #1d4ed8; font-size: 12px; }
             .code { font-family: monospace; color: #64748b; }
+            .img-cell { width: 44px; height: 44px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px; background: #fff; vertical-align: middle; margin-right: 8px; }
             .footer { border-top: 1px solid #cbd5e1; margin-top: 16px; padding-top: 12px; display: flex; justify-content: space-between; font-size: 12px; }
           </style>
         </head>
@@ -437,23 +887,32 @@
             <thead>
               <tr>
                 <th style="width: 50px; text-align: center;">Qtd</th>
-                <th style="width: 130px;">Código</th>
+                <th style="width: 120px;">Código</th>
                 <th>Produto / Descrição</th>
-                <th style="width: 120px;">Categoria</th>
+                <th style="width: 110px;">Categoria</th>
               </tr>
             </thead>
             <tbody>
-              ${list.map(i => `
-                <tr>
-                  <td class="qty" style="text-align: center;">${i.qty} un</td>
-                  <td class="code">${i.id}</td>
-                  <td>
-                    <strong>${i.name}</strong>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">${i.desc}</div>
-                  </td>
-                  <td>${i.cat}</td>
-                </tr>
-              `).join("")}
+              ${list.map(i => {
+                const img = getProductImage(i);
+                const imgHtml = img ? `<img src="${img}" class="img-cell">` : '';
+                return `
+                  <tr>
+                    <td class="qty" style="text-align: center;">${i.qty} un</td>
+                    <td class="code">${i.id}</td>
+                    <td>
+                      <div style="display: flex; align-items: center;">
+                        ${imgHtml}
+                        <div>
+                          <strong>${i.name}</strong>
+                          <div style="font-size: 10px; color: #64748b; margin-top: 2px;">${i.desc}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>${i.cat}</td>
+                  </tr>
+                `;
+              }).join("")}
             </tbody>
           </table>
           <div class="footer">
